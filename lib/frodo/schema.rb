@@ -200,7 +200,7 @@ module Frodo
     end
 
     def recurse_on_parent_type(type_definition)
-      meth = caller_locations(1,1)[0].label
+      meth = caller_locations(1,1)[0].base_label
       if base_type = type_definition.attributes['BaseType']
         parent_type = base_type.value.split('.').last
         return method(meth).call(parent_type)
