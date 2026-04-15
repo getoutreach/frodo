@@ -11,6 +11,8 @@ Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f }
 WebMock.disable_net_connect!
 
 RSpec.configure do |config|
+  # config.raise_errors_for_deprecations!
+
   if config.files_to_run.one?
     config.default_formatter = 'doc'
   end
