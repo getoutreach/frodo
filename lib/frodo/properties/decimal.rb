@@ -8,7 +8,14 @@ module Frodo
         if (@value.nil? || @value.empty?) && (!strict? && allows_nil?)
           nil
         else
-          BigDecimal(@value)
+          parsed = BigDecimal(@value, exception: false)
+          if parsed.nil?
+            match = @value.match(/\A[+-]?(\d+\.?\d*|\.\d+)/)
+            return BigDecimal(match[0]) if match
+            BigDecimal(@value) # raise original error
+          else
+            parsed
+          end
         end
       end
 
@@ -18,7 +25,15 @@ module Frodo
         @value = if (new_value.nil? && !strict? && allows_nil?)
                     nil
                   else
-                    validate(BigDecimal(new_value.to_s))
+                    str = new_value.to_s
+                    parsed = BigDecimal(str, exception: false)
+                    if parsed.nil?
+                      # Extract leading valid decimal number, if any
+                      match = str.match(/\A[+-]?(\d+\.?\d*|\.\d+)/)
+                      raise ArgumentError, "invalid value for BigDecimal(): \"#{str}\"" unless match
+                      parsed = BigDecimal(match[0])
+                    end
+                    validate(parsed)
                     new_value.to_s
                   end
       end
@@ -37,7 +52,7 @@ module Frodo
       private
 
       def validate(value)
-        if value > max_value || value < min_value || value.precs.first > 29
+        if value > max_value || value < min_value || value.precision > 29
           validation_error "Value is outside accepted range: #{min_value} to #{max_value}, or has more than 29 significant digits"
         end
       end
