@@ -19,7 +19,7 @@ describe Frodo::Concerns::Connection do
 
   describe '.middleware' do
     subject       { client.middleware }
-    let(:builder) { double('Faraday::Builder') }
+    let(:builder) { double('Faraday::RackBuilder') }
 
     before do
       expect(client).to receive_message_chain(:connection, builder: builder)

@@ -221,7 +221,7 @@ describe Frodo::Concerns::API do
       end
 
       it 'sets headers on the built request object' do
-        expect_any_instance_of(Faraday::Builder).to receive(:build_response)
+        expect_any_instance_of(Faraday::RackBuilder).to receive(:build_response)
           .with(anything, have_attributes(headers: hash_including(additional_header)))
 
         subject

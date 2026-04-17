@@ -31,7 +31,7 @@ describe Frodo::Property do
 
   describe '#type' do
     it { expect(subject).to respond_to(:type) }
-    it { expect(lambda {subject.type}).to raise_error(NotImplementedError) }
+    it { expect { subject.type }.to raise_error(NotImplementedError) }
   end
 
   describe '#allows_nil?' do
