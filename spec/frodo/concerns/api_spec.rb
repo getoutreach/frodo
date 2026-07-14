@@ -39,7 +39,7 @@ describe Frodo::Concerns::API do
   let(:entity) { double(Frodo::Entity) }
   let(:service) { double(Frodo::Service) }
   let(:query) { double(Frodo::Query) }
-  let(:client_error) { Faraday::Error::ClientError.new(StandardError.new) }
+  let(:client_error) { Faraday::ClientError.new(StandardError.new) }
 
   before do
     stub_request(verb, uri).to_return(body: body.to_json, headers: headers)

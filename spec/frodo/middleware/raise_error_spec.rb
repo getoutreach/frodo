@@ -14,7 +14,7 @@ describe Frodo::Middleware::RaiseError do
       let(:status) { 404 }
 
       it "raises an error" do
-        expect { on_complete }.to raise_error Faraday::Error::ResourceNotFound
+        expect { on_complete }.to raise_error Faraday::ResourceNotFound
       end
     end
 
@@ -22,7 +22,7 @@ describe Frodo::Middleware::RaiseError do
       let(:status) { 300 }
 
       it "raises an error" do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+        expect { on_complete }.to raise_error Faraday::ClientError,
                                               /300: The external ID provided/
       end
     end
@@ -31,7 +31,7 @@ describe Frodo::Middleware::RaiseError do
       let(:status) { 400 }
 
       it "raises an error" do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+        expect { on_complete }.to raise_error Faraday::ClientError,
                                               /Resource not found for the segment/
       end
     end
@@ -49,7 +49,7 @@ describe Frodo::Middleware::RaiseError do
       let(:status) { 413 }
 
       it "raises an error" do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError,
+        expect { on_complete }.to raise_error Faraday::ClientError,
                                               '413: Request Entity Too Large'
       end
     end
@@ -59,7 +59,7 @@ describe Frodo::Middleware::RaiseError do
       let(:status) { 406 }
 
       it 'raises an error with a non-existing error code' do
-        expect { on_complete }.to raise_error Faraday::Error::ClientError, /An error occured/
+        expect { on_complete }.to raise_error Faraday::ClientError, /An error occured/
       end
     end
   end
